@@ -1,0 +1,12 @@
+<% @letters.each do |letter| %>
+  <div class="d-inline-flex justify-content-center align-items-center bg-primary text-white fw-bold rounded px-3 py-2">
+    <%= letter %>
+  </div>
+<% end %>
+<h1> Result </h1>
+
+<h3> <%= @result[:msg] %> </h3>
+<h4> You took <%= @result[:time].round %> seconds </h4>
+<h4> Your score is <%= @result[:score].round %> </h4>
+
+<%= link_to "Play Again?", new_path %>

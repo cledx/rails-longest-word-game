@@ -1,0 +1,14 @@
+<% @letters.each do |letter| %>
+  <div class="d-inline-flex justify-content-center align-items-center bg-primary text-white fw-bold rounded px-3 py-2">
+    <%= letter %>
+  </div>
+<% end %>
+<p></p>
+
+<form action="/score" method="post" data-turbo="false">
+  <input type="text" name="word_attempt" placeholder="Type Word Here">
+  <button type="submit">Submit</button>
+  <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+  <%= hidden_field_tag :letters, @letters %>
+  <%= hidden_field_tag :start_time, @start_time %>
+</form>
