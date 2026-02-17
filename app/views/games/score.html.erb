@@ -6,7 +6,10 @@
 <h1> Result </h1>
 
 <h3> <%= @result[:msg] %> </h3>
+<% if @result[:time] %>
 <h4> You took <%= @result[:time].round %> seconds </h4>
 <h4> Your score is <%= @result[:score].round %> </h4>
+<% end %>
+<h4> Your total score is: <%= @result[:t_score] %> </h4>
 
 <%= link_to "Play Again?", new_path %>

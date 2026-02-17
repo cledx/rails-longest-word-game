@@ -6,6 +6,7 @@ class GamesController < ApplicationController
     def new
         @letters = new_letters
         @start_time = Time.now
+        session[:score] ||= 0
     end
 
     def score
@@ -20,18 +21,20 @@ class GamesController < ApplicationController
                 @result = calc_score(start_time, end_time, answer)
             else
                 #NOT AN ENGLISH WORD
-                @result = results[1]
+                @result = {msg: results[1], t_score: session[:score]}
+                session.delete(:score)
             end
         else
             #NOT IN THE GRID
-            @result = results[0]
+            @result = {msg: results[0], t_score: session[:score]}
+            session.delete(:score)
         end
     end
     
-    #start_time, end_time, , time: end_time - start_time, score: (answer.size * 10) - (score[:time].to_i * 2) 
     def calc_score(start_time, end_time, answer)
         time = end_time - start_time
-        return { msg: "#{answer.capitalize} is a valid answer!", time: time, score: ((answer.size * 10) - (time * 2))}
+        session[:score] += ((answer.size * 10) - (time * 2)).floor
+        return { msg: "#{answer.capitalize} is a valid answer!", time: time, score: ((answer.size * 10) - (time * 2)), t_score: session[:score]}
     end
 
     def new_letters
